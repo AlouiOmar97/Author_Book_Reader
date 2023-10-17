@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Book index{% endblock %}
+
+{% block body %}
+    <h1>List books</h1>
+    
+    <label name="ref"><b>ref</b><label>: <input name="ref" type="text"> <button>Search</button><br>
+    <table class="table" border="2px">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>PublicationDate</th>
+                <th>Published</th>
+                <th>Category</th>
+                <th>Author</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for book in books %}
+            <tr>
+                <td>{{ book.title }}</td>
+                <td>{{ book.publicationDate ? book.publicationDate|date('F d, Y') : '' }}</td>
+                <td>{{ book.published ? 'Yes' : 'No' }}</td>
+                <td>{{ book.category }}</td>
+                <td>{{ book.author.username }}</td>
+                <td>
+                    <a href="{{ path('app_book_show', {'id': book.id}) }}">show</a>
+                    <a href="{{ path('app_book_edit', {'id': book.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_book_new') }}">Create new</a>
+{% endblock %}
